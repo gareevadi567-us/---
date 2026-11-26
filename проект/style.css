@@ -1,0 +1,236 @@
+:root {
+  --bg: #d9d9d9;
+  --panel: #ffffff;
+  --accent: #97c9ff;
+  --text: #000000;
+  --text-secondary: #575757;
+  --text-muted: #717171;
+  --radius: 26px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f2f2f2; /* цвет «стола» вокруг; хочешь сплошной серый — поставь var(--bg) */
+  font-family: "Montserrat", sans-serif;
+  color: var(--text);
+}
+
+
+.screen {
+  position: relative;
+  width: 1200px;
+  margin: 0 auto;
+  min-height: 640px;
+  background: var(--bg);
+}
+
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* ===== Шапка ===== */
+.header-card {
+  position: absolute;
+  top: 30px; left: 88px;
+  width: 1024px; height: 162px;
+  background: var(--panel);
+  border-radius: var(--radius);
+}
+
+.month-title {
+  position: absolute;
+  top: 30px; left: 427px;
+  width: 346px;
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: underline;
+}
+
+/* Колонки «надпись + кружок» — flexbox, разъехаться не могут */
+.weekdays {
+  position: absolute;
+  top: 81px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 32px 0 208px;
+}
+
+.weekday-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.weekday {
+  border: none;
+  position: relative;
+  background: none;
+  padding: 0 4px 6px;
+  font-family: inherit;
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.weekday[data-day="sun"] { color: var(--text-muted); }
+
+.weekday.active { color: var(--text); }
+
+/* Синяя полоска под активным днём */
+.weekday.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 112px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.circle {
+  width: 43px;
+  height: 43px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.circle.active { background: var(--accent); }
+
+.header-line {
+  position: absolute;
+  bottom: 0;
+  left: 230px;
+  width: 741px;
+  height: 2px;
+  pointer-events: none;
+}
+
+/* ===== Панели ===== */
+.panel-title {
+  position: absolute;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: underline;
+  z-index: 1;
+}
+
+.panel-title--schedule { top: 207px; left: 110px; }
+.panel-title--tasks    { top: 207px; left: 595px; white-space: nowrap; }
+
+.panel {
+  position: absolute;
+  top: 251px;
+  width: 424px; height: 239px;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 24px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.panel--schedule { left: 88px; }
+.panel--tasks    { left: 574px; }
+
+/* ===== Списки ===== */
+.time_list, .hard_tasks, .light_tasks {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+
+.time_list li,
+.hard_tasks li,
+.light_tasks li {
+  font-size: 16px;
+  color: var(--text-secondary);
+  padding: 6px 0 6px 28px;
+  position: relative;
+}
+
+.time_list li::before,
+.hard_tasks li::before,
+.light_tasks li::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.hard_tasks li::before  { color: #ff7b7b; }
+.light_tasks li::before { color: var(--text-muted); }
+
+/* ===== Форма ===== */
+.add-form {
+  position: absolute;
+  top: 523px; left: 88px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.add-form__input-wrap {
+  width: 363px; height: 52px;
+  background: var(--panel);
+  border-radius: var(--radius);
+}
+
+.add-form__input-wrap input {
+  width: 100%; height: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0 22px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.add-form__input-wrap input::placeholder { color: var(--text-secondary); }
+
+.add-form__btn {
+  margin-left: 9px;
+  width: 52px; height: 52px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.add-form__btn:hover { filter: brightness(1.05); }
+
+.add-form__btn:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* ===== Декор ===== */
+.decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.decor--vector2 {
+  top: 224px; left: 546px;
+  width: 543px; height: 329px;
+}
